@@ -2,10 +2,10 @@
 
 ### Team members
 
-* Syvak Mykyta (responsible for xxx)
+* Syvak Mykyta (responsible for vhdl source code, resources)
 * Caha Josef (responsible for xxx)
 * David Václav (responsible for xxx)
-* Jílek Jiří (responsible for Git)
+* Jílek Jiří (responsible for GitHub, vhdl source code)
 
 ### Table of contents
 
@@ -50,4 +50,5 @@ Write your text here
 
 ## References
 
-1. Write your text here.
+1. [tomas-fryza/digital-electronics-1 repository on GitHub](https://github.com/tomas-fryza/digital-electronics-1)
+2. [UART basics](https://ece353.engr.wisc.edu/serial-interfaces/uart-basics/)
