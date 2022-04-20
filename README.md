@@ -2,10 +2,10 @@
 
 ### Team members
 
-* Member 1 (responsible for xxx)
-* Member 2 (responsible for xxx)
-* Member 3 (responsible for xxx)
-* ...
+* Syvak Mykyta (responsible for xxx)
+* Caha Josef (responsible for xxx)
+* David Václav (responsible for xxx)
+* Jílek Jiří (responsible for Git)
 
 ### Table of contents
 
