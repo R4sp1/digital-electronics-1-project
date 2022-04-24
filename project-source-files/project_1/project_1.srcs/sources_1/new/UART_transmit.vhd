@@ -6,7 +6,7 @@ entity UART_transmit is
  
   port (
     clk_i       : in  std_logic;
-    tx_dv_i     : in  std_logic;
+    tx_dv_i     : in  std_logic;				--Press button to send data
     tx_byte_i   : in  std_logic_vector(7 downto 0);
     en_i        : in  std_logic;
     
@@ -56,7 +56,7 @@ begin
           
         -- activate start bit, start bit = 0
         when s_tx_start_bit =>
-		  res_en_o 	 <= '1';
+	  res_en_o    <= '1';
           tx_active_o <= '1';
           tx_serial_o <= '0';
 
@@ -81,7 +81,7 @@ begin
             else
             	s_one_bits <= 0;
             	s_Main   <= s_tx_stop_bit;
-          	end if;
+            end if;
         end if;
 
         -- active stop bit, stop bit = 1
@@ -91,8 +91,8 @@ begin
           if en_i = '0' then
             s_Main   <= s_tx_stop_bit;
           else
-			s_tx_done   <= '1';
-			s_Main   <= s_clean;
+	    s_tx_done   <= '1';
+	    s_Main   <= s_clean;
           end if;
 
                   
@@ -100,11 +100,11 @@ begin
         when s_clean =>
           tx_active_o <= '0';
           s_tx_done   <= '1';
-			 if tx_dv_i = '0' then
-				s_Main <= s_clean;
-			 else
-				s_Main   <= s_passive;
-		 	 end if;
+	  if tx_dv_i = '0' then
+	    s_Main <= s_clean;
+	  else
+	    s_Main   <= s_passive;
+	  end if;
           
         -- passive state    
         when others =>
