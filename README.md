@@ -26,7 +26,10 @@ Write your text here.
 
 ## Hardware description
 
-Write your text here.
+* Used development board:
+  * [Nexys AZ](https://digilent.com/shop/nexys-a7-fpga-trainer-board-recommended-for-ece-curriculum/)
+    * [Reference manual](https://digilent.com/reference/programmable-logic/nexys-a7/reference-manual?redirect=1)
+    * [Schematics](https://digilent.com/reference/_media/programmable-logic/nexys-a7/nexys-a7-d3-sch.pdf)
 
 <a name="modules"></a>
 
