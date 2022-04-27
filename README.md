@@ -3,8 +3,6 @@
 ### Team members
 
 * Syvak Mykyta (responsible for vhdl source code, resources)
-* Caha Josef (responsible for xxx)
-* David Václav (responsible for xxx)
 * Jílek Jiří (responsible for GitHub, vhdl source code)
 
 ### Table of contents
