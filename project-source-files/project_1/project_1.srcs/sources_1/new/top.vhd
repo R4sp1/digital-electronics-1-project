@@ -6,7 +6,7 @@ use ieee.std_logic_1164.all;
 ------------------------------------------------------------------------
 entity top is
 port (
-    clk_i      	: in  std_logic;  	-- 10 kHz clock signal
+    clk_i      	: in  std_logic;  	-- 100MHz clock signal
     BTN0       	: in  std_logic;  	-- synchronous reset
     SW0_CPLD	: in  std_logic;	-- data (0)
     SW1_CPLD	: in  std_logic;	-- data (1)
@@ -26,8 +26,6 @@ end entity top;
 -- Architecture declaration for top level
 ------------------------------------------------------------------------
 architecture Behavioral of top is
-    
-    --- WRITE YOUR CODE HERE
     signal s_en	 	: std_logic;
     signal s_srst	: std_logic;
     signal s_test	: std_logic;
@@ -45,7 +43,6 @@ begin
 
     --------------------------------------------------------------------
     -- Sub-block of clock_enable entity
-    --- WRITE YOUR CODE HERE
     CLOCKE: entity work.clock_enable
    		  
         port map( 
@@ -55,13 +52,9 @@ begin
           clk_i => clk_i
 		);
 
- 
-
     --------------------------------------------------------------------
-    -- Sub-block of UART_tx entity
-    --- WRITE YOUR CODE HERE
+    -- Sub-block of UART_transmit entity
     UART: entity work.UART_transmit
-	  
         port map (   
 		   clk_i	=> clk_i,
 		   tx_dv_i	=> BTN0,
@@ -75,13 +68,13 @@ begin
 
                 
                 
-  speed : process (clk_i)
-  begin		
+    speed : process (clk_i)
+    begin		
 		if rising_edge(clk_i) then
-				s_bound <= x"0001";	-- 9600 baud
+		  s_bound <= x"28a0";	-- 10Mhz/10400 = 9615,38 baud; d10400 = x28a0
 		end if;
         
-	end process speed;
+    end process speed;
 
 	LD0 <= s_test;		
 					

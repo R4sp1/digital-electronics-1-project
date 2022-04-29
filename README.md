@@ -18,14 +18,19 @@
 
 ## Project objectives
 
-Write your text here.
+1. Build and test neded compnents of UART
+    * clock enable - send enable signal 9600 times every second -> 9600 baud rate
+    * UART transmit - create 8N1 UART bit structure and send these bits to TX pin
+    * UART recive - catch and show bits which are coming to RX pin
+2. Implement VHD code on Nexys A7 board
+3. Learn to work in team and use github
 
 <a name="hardware"></a>
 
 ## Hardware description
 
 * Used development board:
-  * [Nexys AZ](https://digilent.com/shop/nexys-a7-fpga-trainer-board-recommended-for-ece-curriculum/)
+  * [Nexys A7](https://digilent.com/shop/nexys-a7-fpga-trainer-board-recommended-for-ece-curriculum/)
     * [Reference manual](https://digilent.com/reference/programmable-logic/nexys-a7/reference-manual?redirect=1)
     * [Schematics](https://digilent.com/reference/_media/programmable-logic/nexys-a7/nexys-a7-d3-sch.pdf)
 
@@ -33,7 +38,16 @@ Write your text here.
 
 ## VHDL modules description and simulations
 
-Write your text here.
+1. clock_enable.vhdl
+    * used to generate clock signal at 9600 baud rate
+    * 104 µs period equals to 9615.3846153846 Hz which is slightly more then 9600 Hz
+    
+    ![clock_enable simulation](images/clock_sim.png)
+
+2. UART_transmit.vhdl
+
+3. testbench.vhdl
+    * used to simulate and test components
 
 <a name="top"></a>
 

@@ -21,7 +21,7 @@ entity clock_enable is
 port (
 	g_NPERIOD	   : in std_logic_vector(16-1 downto 0);
     clk_i          : in  std_logic;
-    srst_n_i       : in  std_logic; -- Synchronous reset (active low)
+    srst_n_i       : in  std_logic;                                         -- Synchronous reset
     clock_enable_o : out std_logic
    
 );
@@ -42,9 +42,9 @@ begin
     --------------------------------------------------------------------
     p_clk_enable : process(clk_i)
     begin
-        if rising_edge(clk_i) then  -- Rising clock edge
-            if srst_n_i = '0' then  -- Synchronous reset (active low)
-                s_cnt <= (others => '0');   -- Clear all bits
+        if rising_edge(clk_i) then                                          -- Rising clock edge
+            if srst_n_i = '0' then                                          -- Synchronous reset
+                s_cnt <= (others => '0');                                   -- Clear all bits
                 clock_enable_o <= '0';
             else
                 if s_cnt >= g_NPERIOD-1 then

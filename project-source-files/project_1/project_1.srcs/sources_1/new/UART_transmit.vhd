@@ -6,7 +6,7 @@ entity UART_transmit is
  
   port (
     clk_i       : in  std_logic;
-    tx_dv_i     : in  std_logic;				--Press button to send data
+    tx_dv_i     : in  std_logic;				                            --Press button to send data
     tx_byte_i   : in  std_logic_vector(7 downto 0);
     en_i        : in  std_logic;
     
@@ -38,14 +38,14 @@ begin
         
       case s_Main is
 
-        when s_passive =>               --idle state
+        when s_passive =>                                                   --idle state
           tx_active_o <= '0';
           tx_serial_o <= '1';  
           s_tx_done   <= '0';
           s_bit_index <= 0;
           s_one_bits  <= 0;
 
-          if tx_dv_i = '0' then          --if 0 goto start bit sequence
+          if tx_dv_i = '0' then                                             --if 0 goto start bit sequence
             s_tx_data <= tx_byte_i;
             res_en_o <= '0';
             s_Main <= s_tx_start_bit;
@@ -56,12 +56,12 @@ begin
           
         -- activate start bit, start bit = 0
         when s_tx_start_bit =>
-	  res_en_o    <= '1';
+	      res_en_o    <= '1';
           tx_active_o <= '1';
           tx_serial_o <= '0';
 
         -- assigning start/data bits
-          if en_i = '0' then                    --if enable == 1 send data bits
+          if en_i = '0' then                                                --if enable == 1 send data bits
             s_Main   <= s_tx_start_bit;
           else
             s_Main   <= s_tx_data_bits;
@@ -75,14 +75,14 @@ begin
           if en_i = '0' then
             s_Main   <= s_tx_data_bits;
           else	
-            if s_bit_index < 7 then						-- send next bit
+            if s_bit_index < 7 then						                    -- send next bit
               s_bit_index <= s_bit_index + 1;
               s_Main   <= s_tx_data_bits;
             else
             	s_one_bits <= 0;
             	s_Main   <= s_tx_stop_bit;
             end if;
-        end if;
+          end if;
 
         -- active stop bit, stop bit = 1
         when s_tx_stop_bit =>
@@ -91,8 +91,8 @@ begin
           if en_i = '0' then
             s_Main   <= s_tx_stop_bit;
           else
-	    s_tx_done   <= '1';
-	    s_Main   <= s_clean;
+	        s_tx_done   <= '1';
+	        s_Main   <= s_clean;
           end if;
 
                   
@@ -100,11 +100,11 @@ begin
         when s_clean =>
           tx_active_o <= '0';
           s_tx_done   <= '1';
-	  if tx_dv_i = '0' then
-	    s_Main <= s_clean;
-	  else
-	    s_Main   <= s_passive;
-	  end if;
+	      if tx_dv_i = '0' then
+	        s_Main <= s_clean;
+	      else
+	        s_Main   <= s_passive;
+	      end if;
           
         -- passive state    
         when others =>
