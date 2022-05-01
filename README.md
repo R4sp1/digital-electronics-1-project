@@ -18,12 +18,12 @@
 
 ## Project objectives
 
-1. Build and test neded compnents of UART
+1. Build and test needed components of UART
     * clock enable - send enable signal 9600 times every second -> 9600 baud rate
     * UART transmit - create 8N1 UART bit structure and send these bits to TX pin
     * UART recive - catch and show bits which are coming to RX pin
-2. Implement VHD code on Nexys A7 board
-3. Learn to work in team and use github
+2. Implement VHDL code on Nexys A7 board
+3. Learn how to work in team and use git
 
 <a name="hardware"></a>
 
@@ -41,10 +41,13 @@
 1. clock_enable.vhdl
     * used to generate clock signal at 9600 baud rate
     * 104 µs period equals to 9615.3846153846 Hz which is slightly more then 9600 Hz
-    
-    ![clock_enable simulation](images/clock_sim.png)
+    * ![clock_enable simulation](images/clock_sim.png)
 
 2. UART_transmit.vhdl
+   * transmit 8 bits long message in 8N1 UART structure
+   * ![UART transmit simulation](images/sim1.png)
+   * in simulation we can clearly see start bit and then 8 bits acording to SW0 - SW7 switches, last bit corespond to stop bit
+   * in the bottom of the picture we can see that every bit have 104 µs period which corespond to 9600 baud rate
 
 3. testbench.vhdl
     * used to simulate and test components
