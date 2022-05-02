@@ -1,4 +1,4 @@
-# UART interface, ie UART transmitter and receiver. Let the UART frame structure is 8N1 and symbol rate is 9600 Bd.
+# UART interface in VHDL - BPC-DE1 team project
 
 ### Team members
 
@@ -17,6 +17,8 @@
 <a name="objectives"></a>
 
 ## Project objectives
+
+Our assignment: UART interface, ie UART transmitter and receiver. Let the UART frame structure is 8N1 and symbol rate is 9600 Bd.
 
 1. Build and test needed components of UART
     * clock enable - send enable signal 9600 times every second -> 9600 baud rate
@@ -40,12 +42,19 @@
 
 1. clock_enable.vhdl
     * used to generate clock signal at 9600 baud rate
+    * we used folowing equation to determine number of internal 100 MHz clock pulses to generate one enable impulse which will corespond to 9600 bauds => 9600 Hz
+    ![equation](images/equations.png)
     * 104 µs period equals to 9615.3846153846 Hz which is slightly more then 9600 Hz
-    * ![clock_enable simulation](images/clock_sim.png)
+
+    ![clock_enable simulation](images/clock_sim.png)
+    * in simulation we can see internal clock pulses and when we hit 10400 pulses we generate one enable impulse
 
 2. UART_transmit.vhdl
    * transmit 8 bits long message in 8N1 UART structure
-   * ![UART transmit simulation](images/sim1.png)
+   * 8N1 UART structure corespond to 8 data bits, no parity and 1 stop bit. In normal state serial line is in it's high state (logic 1), if we want to send data we must introduce start bit => go to logical 0, then we send coresponding 8 data bits and in the end we send one stop bit => logical 1
+
+   ![UART transmit simulation](images/sim1.png)
+
    * in simulation we can clearly see start bit and then 8 bits acording to SW0 - SW7 switches, last bit corespond to stop bit
    * in the bottom of the picture we can see that every bit have 104 µs period which corespond to 9600 baud rate
 
