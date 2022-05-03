@@ -35,37 +35,99 @@ Our assignment: UART interface, ie UART transmitter and receiver. Let the UART f
   * [Nexys A7](https://digilent.com/shop/nexys-a7-fpga-trainer-board-recommended-for-ece-curriculum/)
     * [Reference manual](https://digilent.com/reference/programmable-logic/nexys-a7/reference-manual?redirect=1)
     * [Schematics](https://digilent.com/reference/_media/programmable-logic/nexys-a7/nexys-a7-d3-sch.pdf)
+    * Uses Artix-7-50T FPGA
+    * 100 MHz internal clock
 
 <a name="modules"></a>
 
 ## VHDL modules description and simulations
 
 1. clock_enable.vhdl
-    * used to generate clock signal at 9600 baud rate
-    * we used folowing equation to determine number of internal 100 MHz clock pulses to generate one enable impulse which will corespond to 9600 bauds => 9600 Hz
+    * [Clock_enable code](https://github.com/R4sp1/digital-electronics-1-project/blob/main/project-source-files/project_1/project_1.srcs/sources_1/new/clock_enable.vhd)
+    * Used to generate clock signal at 9600 baud rate
+    * We used folowing equation to determine number of internal 100 MHz clock pulses to generate one enable impulse which will corespond to 9600 bauds => 9600 Hz
     ![equation](images/equations.png)
-    * 104 µs period equals to 9615.3846153846 Hz which is slightly more then 9600 Hz
+        * 104 µs period equals to 9615.3846153846 Hz which is slightly more then 9600 Hz
+    ```vhdl
+    architecture Behavioral of clock_enable is
+        signal s_cnt : std_logic_vector(16-1 downto 0) := x"0000";
+        begin
+        p_clk_enable : process(clk_i)
+        begin
+            if rising_edge(clk_i) then               -- Rising clock edge
+                if srst_n_i = '0' then               -- Synchronous reset
+                    s_cnt <= (others => '0');        -- Clear all bits
+                    clock_enable_o <= '0';
+                else
+                    if s_cnt >= g_NPERIOD-1 then
+                      s_cnt <= (others => '0');
+                      clock_enable_o <= '1';
+                    else
+                     s_cnt <= s_cnt + x"0001";
+                      clock_enable_o <= '0';
+                    end if;
+                end if;
+            end if;
+        end process p_clk_enable;
+    end architecture Behavioral;
+    ```
+    
+    * With every clock pulse on rising edge we add 1 to s_cnt which is set in top module to 10400, if we hit 10400-1 value we generate one enable signal
 
     ![clock_enable simulation](images/clock_sim.png)
-    * in simulation we can see internal clock pulses and when we hit 10400 pulses we generate one enable impulse
+    * In simulation we can see internal clock pulses and when we hit 10400 pulses we generate one enable impulse
 
 2. UART_transmit.vhdl
-   * transmit 8 bits long message in 8N1 UART structure
+   * [UART transmit code](https://github.com/R4sp1/digital-electronics-1-project/blob/main/project-source-files/project_1/project_1.srcs/sources_1/new/UART_transmit.vhd)
+   * Transmit 8 bits long message in 8N1 UART structure
+   * ![state diagram](images/state_diagram.jpg)
+        * State diagram of UART transmit module  
    * 8N1 UART structure corespond to 8 data bits, no parity and 1 stop bit. In normal state serial line is in it's high state (logic 1), if we want to send data we must introduce start bit => go to logical 0, then we send coresponding 8 data bits and in the end we send one stop bit => logical 1
 
    ![UART transmit simulation](images/sim1.png)
 
-   * in simulation we can clearly see start bit and then 8 bits acording to SW0 - SW7 switches, last bit corespond to stop bit
-   * in the bottom of the picture we can see that every bit have 104 µs period which corespond to 9600 baud rate
+   * In simulation we can clearly see start bit and then 8 bits acording to SW0 - SW7 switches, last bit corespond to stop bit but it's hard to recognise because LDO line remains in HIGH state
+   * In the bottom of the picture we can see that every bit have 104 µs period which corespond to 9600 baud rate
 
 3. testbench.vhdl
-    * used to simulate and test components
+    * [Testbench code](https://github.com/R4sp1/digital-electronics-1-project/blob/main/project-source-files/project_1/project_1.srcs/sim_1/new/testbench.vhd)
+    * Used to simulate and test components
+    * Clock generation process:
+    ```vhdl
+    clk_i_process :process      -- start of generating clock impulses
+    begin
+		clk_i <= '0';
+		wait for clk_i_period/2;
+		clk_i <= '1';
+		wait for clk_i_period/2;
+    end process;
+    ```
+    * Send data process:
+
+    ```vhdl
+    stim_proc: process
+    begin		
+      -- hold reset state for 100 ns
+      wait for 100 ns;	
+      wait for clk_i_period*10000;
+		
+		BTN0 <= '0';                    -- start sending bits in 8N1 UART standart at 9600 baud
+		wait for clk_i_period*400;
+		
+		BTN0 <= '1';					-- return to passsive state
+		wait for clk_i_period*200;	
+      wait;
+    end process;
+    ```
+
 
 <a name="top"></a>
 
 ## TOP module description and simulations
 
-Write your text here.
+[Top module code](https://github.com/R4sp1/digital-electronics-1-project/blob/main/project-source-files/project_1/project_1.srcs/sources_1/new/top.vhd)
+
+After pin assignment we declared work entities and started sub codes as a clock_enble and UART_transmit. After that we assigned 10400 value as HEX code to s_bound signal which pass it to clock counter.
 
 <a name="video"></a>
 
