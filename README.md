@@ -35,7 +35,7 @@ Our assignment: UART interface, ie UART transmitter and receiver. Let the UART f
   * [Nexys A7](https://digilent.com/shop/nexys-a7-fpga-trainer-board-recommended-for-ece-curriculum/)
     * [Reference manual](https://digilent.com/reference/programmable-logic/nexys-a7/reference-manual?redirect=1)
     * [Schematics](https://digilent.com/reference/_media/programmable-logic/nexys-a7/nexys-a7-d3-sch.pdf)
-    * Uses Artix-7-50T FPGA
+    * Uses Artix-A7-50T FPGA
     * 100 MHz internal clock
 
 <a name="modules"></a>
