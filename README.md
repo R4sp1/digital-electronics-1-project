@@ -84,16 +84,16 @@ Our assignment: UART interface, ie UART transmitter and receiver. Let the UART f
         * State diagram of UART transmit module  
    * 8N1 UART structure corespond to 8 data bits, no parity and 1 stop bit. In normal state serial line is in it's high state (logic 1), if we want to send data we must introduce start bit => go to logical 0, then we send coresponding 8 data bits and in the end we send one stop bit => logical 1
 
-   ![UART transmit simulation](images/sim1.png)
+   ![UART transmit simulation](images/sim.png)
 
    * In simulation (red signal) we can clearly see start bit and then 8 bits acording to SW0 - SW7 switches (swithes are represented in pink colour), last bit corespond to stop bit but it's hard to recognise because tx line remains in HIGH state
    * In the bottom of the picture we can see that every bit have 104 µs period which corespond to 9600 baud rate
 
 3. UART_receive.vhdl
-    * [UART_receive code]()
+    * [UART_receive code](https://github.com/R4sp1/digital-electronics-1-project/blob/main/project-source-files/project_1/project_1.srcs/sources_1/new/UART_recive.vhd)
     * In receive mode we must sample data line faster then baud rate to catch start bit, after start bit we sample invidual bits and adding them to counter which we send to output after stop bit
 
-    ![UART receive simulation](images/sim1.png)
+    ![UART receive simulation](images/sim.png)
 
     * UART receive data line in simulation is showed in dark blue colour. We can see that LEDs (blue signals) are defined only after data are completely received. Number x55 in rx_data[] corespond to recived bit sequence "01010101" and that corespond to character "U" in ASCII table
 
