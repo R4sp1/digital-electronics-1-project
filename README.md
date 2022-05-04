@@ -110,6 +110,7 @@ Our assignment: UART interface, ie UART transmitter and receiver. Let the UART f
     
     * Used to simulate and test components
     * Clock generation process:
+    
     ```vhdl
     clk_i_process :process      -- start of generating clock impulses
     begin
