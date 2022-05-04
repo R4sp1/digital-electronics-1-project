@@ -2,7 +2,7 @@
 
 ### Team members
 
-* Syvak Mykyta (responsible for vhdl source code, resources)
+* Sivak Mykyta (responsible for vhdl source code, resources)
 * Jílek Jiří (responsible for GitHub, vhdl source code)
 
 ### Table of contents
@@ -148,6 +148,8 @@ For testing we used PuTTY software to which we send data selected by switches on
 ## Video
 
 Write your text here
+
+![Video](video/Demonstration.mov)
 
 <a name="references"></a>
 
