@@ -86,7 +86,7 @@ Our assignment: UART interface, ie UART transmitter and receiver. Let the UART f
 
    ![UART transmit simulation](images/sim.png)
 
-   * In simulation (red signal) we can clearly see start bit and then 8 bits acording to SW0 - SW7 switches (swithes are represented in pink colour), last bit corespond to stop bit but it's hard to recognise because tx line remains in HIGH state
+   * In simulation (red signal) we can clearly see start bit (start bit is send after button is pressed which we can see in white signal) and then 8 bits acording to SW0 - SW7 switches (swithes are represented in pink colour), last bit corespond to stop bit but it's hard to recognise because tx line remains in HIGH state
    * In the bottom of the picture we can see that every bit have 104 µs period which corespond to 9600 baud rate
 
 3. UART_receive.vhdl
