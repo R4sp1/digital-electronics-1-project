@@ -149,7 +149,9 @@ For testing we used PuTTY software to which we send data selected by switches on
 
 Write your text here
 
-![](video/Demonstration.mp4)
+![](https://user-images.githubusercontent.com/99604751/166800730-b6cc6752-64d9-41cf-af19-0546979353c6.mp4)
+https://user-images.githubusercontent.com/99604751/166800730-b6cc6752-64d9-41cf-af19-0546979353c6.mp4
+
 
 <a name="references"></a>
 
