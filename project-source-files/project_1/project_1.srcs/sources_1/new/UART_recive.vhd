@@ -1,14 +1,13 @@
 library ieee;
 use ieee.std_logic_1164.all;
-use ieee.std_logic_unsigned.all;    -- Provides unsigned numerical computation
-
+use ieee.std_logic_unsigned.all;
 
 
 entity UART_recive is
 generic(
-        g_PERIOD: integer := 651
+        g_PERIOD: integer := 650
         );
-port (
+port(
     clk_i       : in  std_logic;
     rx_data_in  : in  std_logic;
     rx_data_out : out std_logic_vector (7 downto 0);
@@ -18,8 +17,8 @@ end UART_recive;
 
 architecture Behavioral of UART_recive is
 
-    type rx_states_t is (IDLE, START, DATA, STOP);
-    signal rx_state: rx_states_t := IDLE;
+    type rx_states_t is (s_idle, s_start, s_data, s_stop);
+    signal rx_state: rx_states_t := s_idle;
 
     signal baud_rate_x16_clk  : std_logic := '0';
     signal rx_stored_data     : std_logic_vector(7 downto 0) := (others => '0');
@@ -51,45 +50,41 @@ begin
     begin
         if rising_edge(clk_i) then
             if (reset = '1') then
-                rx_state <= IDLE;
+                rx_state <= s_idle;
                 rx_stored_data <= (others => '0');
                 rx_data_out <= (others => '0');
                 bit_duration_count := 0;
                 bit_count := 0;
             else
-                if (baud_rate_x16_clk = '1') then     -- the FSM works 16 times faster the baud rate frequency
+                if (baud_rate_x16_clk = '1') then     -- the rx works 16 times faster the baud rate frequency
                     case rx_state is
-
-                        when IDLE =>
-
+                    
+                        when s_idle =>
                             rx_stored_data <= (others => '0');    -- clean the received data register
                             bit_duration_count := 0;              -- reset counters
                             bit_count := 0;
-
-                            if (rx_data_in = '0') then             -- if the start bit received
-                                rx_state <= START;                 -- transit to the START state
+                            if (rx_data_in = '0') then             -- if the start bit received go to START sequnce
+                                rx_state <= s_start;                 
                             end if;
-
-                        when START =>
-
+                            
+                        when s_start =>
                             if (rx_data_in = '0') then             -- verify that the start bit is preset
-                                if (bit_duration_count = 7) then   -- wait a half of the baud rate cycle
-                                    rx_state <= DATA;              -- (it puts the capture point at the middle of duration of the receiving bit)
+                                if (bit_duration_count = 7) then   
+                                    rx_state <= s_data;              
                                     bit_duration_count := 0;
                                 else
                                     bit_duration_count := bit_duration_count + 1;
                                 end if;
                             else
-                                rx_state <= IDLE;                  -- the start bit is not preset (false alarm)
+                                rx_state <= s_idle;                  -- the start bit is not preset (false alarm)
                             end if;
 
-                        when DATA =>
-
-                            if (bit_duration_count = 15) then                -- wait for "one" baud rate cycle (not strictly one, about one)
+                        when s_data =>
+                            if (bit_duration_count = 15) then                -- wait for one enable impulse
                                 rx_stored_data(bit_count) <= rx_data_in;     -- fill in the receiving register one received bit.
                                 bit_duration_count := 0;
                                 if (bit_count = 7) then                      -- when all 8 bit received, go to the STOP state
-                                    rx_state <= STOP;
+                                    rx_state <= s_stop;
                                     bit_duration_count := 0;
                                 else
                                     bit_count := bit_count + 1;
@@ -98,22 +93,21 @@ begin
                                 bit_duration_count := bit_duration_count + 1;
                             end if;
 
-                        when STOP =>
-
-                            if (bit_duration_count = 15) then      -- wait for "one" baud rate cycle
-                                rx_data_out <= rx_stored_data;     -- transer the received data to the outside world
-                                rx_state <= IDLE;
+                        when s_stop =>
+                            if (bit_duration_count = 15) then      -- wait for one enable impulse
+                                rx_data_out <= rx_stored_data;     -- transer the received data on the LEDs
+                                rx_state <= s_idle;
                             else
                                 bit_duration_count := bit_duration_count + 1;
                             end if;
 
                         when others =>
-                            rx_state <= IDLE;
+                            rx_state <= s_idle;
+                            
                     end case;
                 end if;
             end if;
         end if;
     end process UART_rx;
-
 
 end Behavioral;

@@ -9,8 +9,7 @@ entity UART_transmit is
     tx_dv_i     : in  std_logic;				                            --Press button to send data
     tx_byte_i   : in  std_logic_vector(7 downto 0);
     en_i        : in  std_logic;
-    
-    res_en_o	 : out std_logic;
+    res_en_o	: out std_logic;
     tx_active_o : out std_logic;
     tx_serial_o : out std_logic;
     tx_done_o   : out std_logic
@@ -23,7 +22,7 @@ architecture transmitter of UART_transmit is
 
   type t_Main is (s_passive, s_tx_start_bit, s_tx_data_bits, s_tx_stop_bit, s_clean);
   
-  signal s_Main : t_Main  := s_passive;
+  signal s_Main      : t_Main  := s_passive;
   signal s_bit_index : integer range 0 to 7 := 0;
   signal s_one_bits  : integer range 0 to 7 := 0;
   signal s_tx_data   : std_logic_vector(7 downto 0) := (others => '0');
@@ -53,7 +52,6 @@ begin
             s_Main <= s_passive;
           end if;
 
-          
         -- activate start bit, start bit = 0
         when s_tx_start_bit =>
 	      res_en_o    <= '1';
@@ -68,7 +66,6 @@ begin
             s_Main   <= s_tx_data_bits;
           end if;
 
-          
         -- activate data bits         
         when s_tx_data_bits =>
           tx_serial_o <= s_tx_data(s_bit_index);
@@ -96,7 +93,6 @@ begin
 	        s_Main   <= s_clean;
           end if;
 
-                  
         -- clean process
         when s_clean =>
           tx_active_o <= '0';

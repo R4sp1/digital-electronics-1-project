@@ -21,11 +21,12 @@ ARCHITECTURE behavior OF testbench IS
          SW5_CPLD   : IN  std_logic;
          SW6_CPLD   : IN  std_logic;
          SW7_CPLD   : IN  std_logic;
-         LD0 		: OUT  std_logic;
+         tx 		: OUT  std_logic;
          active_o   : OUT  std_logic;
          done_o 	: OUT  std_logic;
-         LED       : out std_logic_vector (7 downto 0);
-         rx             : in  std_logic
+         LED        : out std_logic_vector (7 downto 0);
+         rx         : in  std_logic;
+         reset      : in  std_logic
         );
     END COMPONENT;
     
@@ -33,7 +34,7 @@ ARCHITECTURE behavior OF testbench IS
    --Inputs
    signal clk_i     : std_logic;
    signal BTN0 	    : std_logic := '1';   -- 1 passive state -- 0 active state
-   signal SW0_CPLD  : std_logic := '1';
+   signal SW0_CPLD  : std_logic := '1';   -- Data to transmit
    signal SW1_CPLD  : std_logic := '0';
    signal SW2_CPLD  : std_logic := '1';
    signal SW3_CPLD  : std_logic := '0';
@@ -42,18 +43,19 @@ ARCHITECTURE behavior OF testbench IS
    signal SW6_CPLD  : std_logic := '1';
    signal SW7_CPLD  : std_logic := '0';
 
- 	--Outputs
-   signal LD0 		: std_logic;
+ 	-- Transmit outputs
+   signal tx 		: std_logic; 
    signal active_o  : std_logic;
    signal done_o 	: std_logic;
+   
+   -- Recive inputs
+   signal rx_data_out    : std_logic_vector (7 downto 0) := (others => '0');
+   signal rx_serial_in   : std_logic := '1';
+   signal reset          : std_logic := '0';         -- hardware reset set to LOW
 	
    -- Clock period definitions
    constant clk_i_period : time := 10 ns;   -- 10ns period = 100MHz
-   
-   
-    signal rx_data_out    : std_logic_vector (7 downto 0) := (others => '0');
-    
-    signal rx_serial_in   : std_logic := '1';
+
  
 BEGIN
  
@@ -69,16 +71,15 @@ BEGIN
           SW5_CPLD  => SW5_CPLD,
           SW6_CPLD  => SW6_CPLD,
           SW7_CPLD  => SW7_CPLD,
-          LD0		=> LD0,
+          tx		=> tx,
           active_o  => active_o,
           done_o    => done_o,
-          
-            LED  => rx_data_out,
-            
-            rx        => rx_serial_in
+          LED       => rx_data_out,
+          rx        => rx_serial_in,
+          reset     => reset
         );
         
-        rx_serial_in <= LD0;
+        rx_serial_in <= tx;
 
    -- Clock process definitions
    clk_i_process :process
