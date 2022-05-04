@@ -149,7 +149,7 @@ For testing we used PuTTY software to which we send data selected by switches on
 
 Write your text here
 
-![](video/Demonstration.mp4)
+![](video/Demonstration.MP4)
 
 <a name="references"></a>
 
