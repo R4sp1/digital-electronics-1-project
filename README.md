@@ -47,9 +47,10 @@ Our assignment: UART interface, ie UART transmitter and receiver. Let the UART f
     * Used to generate clock signal at 9600 baud rate
     * We used folowing equation to determine number of internal 100 MHz clock pulses to generate one enable impulse which will corespond to 9600 bauds => 9600 Hz
     
-    ![equation](images/equations.png)
+    * ![equation](images/equations.png)
     
     * 104 µs period equals to 9615.3846153846 Hz which is slightly more then 9600 Hz
+    
     ```vhdl
     architecture Behavioral of clock_enable is
         signal s_cnt : std_logic_vector(16-1 downto 0) := x"0000";
@@ -77,9 +78,11 @@ Our assignment: UART interface, ie UART transmitter and receiver. Let the UART f
     * With every clock pulse on rising edge we add 1 to s_cnt which is set in top module to 10400, if we hit 10400-1 value we generate one enable signal
 
     ![clock_enable simulation](images/clock_sim.png)
+    
     * In simulation we can see internal clock pulses and when we hit 10400 pulses we generate one enable impulse
 
 2. UART_transmit.vhdl
+
    * [UART transmit code](https://github.com/R4sp1/digital-electronics-1-project/blob/main/project-source-files/project_1/project_1.srcs/sources_1/new/UART_transmit.vhd)
    * Transmit 8 bits long message in 8N1 UART structure
    * ![state diagram](images/state_diagram.jpg)
@@ -92,6 +95,7 @@ Our assignment: UART interface, ie UART transmitter and receiver. Let the UART f
    * In the bottom of the picture we can see that every bit have 104 µs period which corespond to 9600 baud rate
 
 3. UART_receive.vhdl
+
     * [UART_receive code](https://github.com/R4sp1/digital-electronics-1-project/blob/main/project-source-files/project_1/project_1.srcs/sources_1/new/UART_recive.vhd)
     * In receive mode we must sample data line faster then baud rate to catch start bit, after start bit we sample invidual bits and adding them to counter which we send to output after stop bit
 
