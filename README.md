@@ -157,7 +157,7 @@ For testing we used PuTTY software to which we send data selected by switches on
 
 ## Video
 
-This video shows the transmitter and receiver in action:
+This video represents the transmitter and receiver in action:
 
 https://user-images.githubusercontent.com/99604751/166800730-b6cc6752-64d9-41cf-af19-0546979353c6.mp4
 
