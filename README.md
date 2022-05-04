@@ -46,8 +46,10 @@ Our assignment: UART interface, ie UART transmitter and receiver. Let the UART f
     * [Clock_enable code](https://github.com/R4sp1/digital-electronics-1-project/blob/main/project-source-files/project_1/project_1.srcs/sources_1/new/clock_enable.vhd)
     * Used to generate clock signal at 9600 baud rate
     * We used folowing equation to determine number of internal 100 MHz clock pulses to generate one enable impulse which will corespond to 9600 bauds => 9600 Hz
+    
     ![equation](images/equations.png)
-        * 104 µs period equals to 9615.3846153846 Hz which is slightly more then 9600 Hz
+    
+    * 104 µs period equals to 9615.3846153846 Hz which is slightly more then 9600 Hz
     ```vhdl
     architecture Behavioral of clock_enable is
         signal s_cnt : std_logic_vector(16-1 downto 0) := x"0000";
