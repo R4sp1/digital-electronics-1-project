@@ -84,6 +84,7 @@ Our assignment: UART interface, ie UART transmitter and receiver. Let the UART f
 2. UART_transmit.vhdl
 
    * [UART transmit code](https://github.com/R4sp1/digital-electronics-1-project/blob/main/project-source-files/project_1/project_1.srcs/sources_1/new/UART_transmit.vhd)
+   
    * Transmit 8 bits long message in 8N1 UART structure
    * ![state diagram](images/state_diagram.jpg)
         * State diagram of UART transmit module  
@@ -97,6 +98,7 @@ Our assignment: UART interface, ie UART transmitter and receiver. Let the UART f
 3. UART_receive.vhdl
 
     * [UART_receive code](https://github.com/R4sp1/digital-electronics-1-project/blob/main/project-source-files/project_1/project_1.srcs/sources_1/new/UART_recive.vhd)
+    
     * In receive mode we must sample data line faster then baud rate to catch start bit, after start bit we sample invidual bits and adding them to counter which we send to output after stop bit
 
     ![UART receive simulation](images/sim.png)
@@ -105,6 +107,7 @@ Our assignment: UART interface, ie UART transmitter and receiver. Let the UART f
 
 4. testbench.vhdl
     * [Testbench code](https://github.com/R4sp1/digital-electronics-1-project/blob/main/project-source-files/project_1/project_1.srcs/sim_1/new/testbench.vhd)
+    
     * Used to simulate and test components
     * Clock generation process:
     ```vhdl
