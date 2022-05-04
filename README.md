@@ -119,6 +119,7 @@ Our assignment: UART interface, ie UART transmitter and receiver. Let the UART f
 		wait for clk_i_period/2;
     end process;
     ```
+    
     * Send data process:
 
     ```vhdl
@@ -136,8 +137,7 @@ Our assignment: UART interface, ie UART transmitter and receiver. Let the UART f
       wait;
     end process;
     ```
-
-
+   
 <a name="top"></a>
 
 ## TOP module description and simulations
