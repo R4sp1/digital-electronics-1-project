@@ -19,7 +19,11 @@ port (
 ------------------------- control variables ----------------------------
     LD0		    : out std_logic;  	-- LED for control
     active_o	: out std_logic;	-- active state
-    done_o	    : out std_logic); 	-- passive state
+    done_o	    : out std_logic; 	-- passive state
+    rx          : in  std_logic;
+    
+           LED            : out std_logic_vector (7 downto 0)
+               );
 end entity top;
 
 ------------------------------------------------------------------------
@@ -28,7 +32,7 @@ end entity top;
 architecture Behavioral of top is
     signal s_en	 	: std_logic;
     signal s_srst	: std_logic;
-    signal s_test	: std_logic;
+        
     signal s_bound 	: std_logic_vector(16-1 downto 0);
     signal s_data  	: std_logic_vector(8-1 downto 0);
 begin
@@ -65,6 +69,15 @@ begin
 		   tx_serial_o 	=> s_test,
 		   tx_done_o   	=> done_o	
 		 );
+		 
+	receiver : entity work.UART_recive
+        port map (
+            clk_i            => clk_i,
+            reset          => s_srst,
+            rx_data_in     => rx,
+            rx_data_out    => LED
+        );
+
 
                 
                 

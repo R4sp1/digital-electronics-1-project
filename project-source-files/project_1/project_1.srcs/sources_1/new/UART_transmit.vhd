@@ -41,7 +41,7 @@ begin
         when s_passive =>                                                   --idle state
           tx_active_o <= '0';
           tx_serial_o <= '1';  
-          s_tx_done   <= '0';
+          s_tx_done   <= '1';
           s_bit_index <= 0;
           s_one_bits  <= 0;
 
@@ -59,6 +59,7 @@ begin
 	      res_en_o    <= '1';
           tx_active_o <= '1';
           tx_serial_o <= '0';
+          s_tx_done   <= '0';
 
         -- assigning start/data bits
           if en_i = '0' then                                                --if enable == 1 send data bits

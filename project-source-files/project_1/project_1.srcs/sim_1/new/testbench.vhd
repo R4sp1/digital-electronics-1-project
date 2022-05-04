@@ -23,7 +23,9 @@ ARCHITECTURE behavior OF testbench IS
          SW7_CPLD   : IN  std_logic;
          LD0 		: OUT  std_logic;
          active_o   : OUT  std_logic;
-         done_o 	: OUT  std_logic
+         done_o 	: OUT  std_logic;
+         LED       : out std_logic_vector (7 downto 0);
+         rx             : in  std_logic
         );
     END COMPONENT;
     
@@ -47,6 +49,11 @@ ARCHITECTURE behavior OF testbench IS
 	
    -- Clock period definitions
    constant clk_i_period : time := 10 ns;   -- 10ns period = 100MHz
+   
+   
+    signal rx_data_out    : std_logic_vector (7 downto 0) := (others => '0');
+    
+    signal rx_serial_in   : std_logic := '1';
  
 BEGIN
  
@@ -64,8 +71,14 @@ BEGIN
           SW7_CPLD  => SW7_CPLD,
           LD0		=> LD0,
           active_o  => active_o,
-          done_o    => done_o
+          done_o    => done_o,
+          
+            LED  => rx_data_out,
+            
+            rx        => rx_serial_in
         );
+        
+        rx_serial_in <= LD0;
 
    -- Clock process definitions
    clk_i_process :process
