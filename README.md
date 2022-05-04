@@ -86,10 +86,18 @@ Our assignment: UART interface, ie UART transmitter and receiver. Let the UART f
 
    ![UART transmit simulation](images/sim1.png)
 
-   * In simulation we can clearly see start bit and then 8 bits acording to SW0 - SW7 switches, last bit corespond to stop bit but it's hard to recognise because LDO line remains in HIGH state
+   * In simulation (red signal) we can clearly see start bit and then 8 bits acording to SW0 - SW7 switches (swithes are represented in pink colour), last bit corespond to stop bit but it's hard to recognise because tx line remains in HIGH state
    * In the bottom of the picture we can see that every bit have 104 µs period which corespond to 9600 baud rate
 
-3. testbench.vhdl
+3. UART_receive.vhdl
+    * [UART_receive code]()
+    * In receive mode we must sample data line faster then baud rate to catch start bit, after start bit we sample invidual bits and adding them to counter which we send to output after stop bit
+
+    ![UART receive simulation](images/sim1.png)
+
+    * UART receive data line in simulation is showed in dark blue colour. We can see that LEDs (blue signals) are defined only after data are completely received. Number x55 in rx_data[] corespond to recived bit sequence "01010101" and that corespond to character "U" in ASCII table
+
+4. testbench.vhdl
     * [Testbench code](https://github.com/R4sp1/digital-electronics-1-project/blob/main/project-source-files/project_1/project_1.srcs/sim_1/new/testbench.vhd)
     * Used to simulate and test components
     * Clock generation process:
@@ -127,8 +135,14 @@ Our assignment: UART interface, ie UART transmitter and receiver. Let the UART f
 
 [Top module code](https://github.com/R4sp1/digital-electronics-1-project/blob/main/project-source-files/project_1/project_1.srcs/sources_1/new/top.vhd)
 
-After pin assignment we declared work entities and started sub codes as a clock_enble and UART_transmit. After that we assigned 10400 value as HEX code to s_bound signal which pass it to clock counter.
+After pin assignment we declared work entities and started sub codes as a clock_enble, UART_transmit and UART_receive. After that we assigned 10400 value as HEX code to s_bound signal which pass it to the clock counter.
 
+For testing we used PuTTY software to which we send data selected by switches on the board and recived data from PuTTY which we showed on LEDs. For decoding we used ASCII table:
+
+![ASCII table](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/ASCII-Table-wide.svg/800px-ASCII-Table-wide.svg.png?20100522130436)
+
+ Available online at Wikimedia: <a href="https://commons.wikimedia.org/wiki/File:ASCII-Table-wide.svg">ASCII-Table.svg: ZZT32derivative work: Usha</a>, Public domain, via Wikimedia Commons
+ 
 <a name="video"></a>
 
 ## Video
