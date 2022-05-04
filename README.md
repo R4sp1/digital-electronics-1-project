@@ -47,7 +47,7 @@ Our assignment: UART interface, ie UART transmitter and receiver. Let the UART f
     * Used to generate clock signal at 9600 baud rate
     * We used folowing equation to determine number of internal 100 MHz clock pulses to generate one enable impulse which will corespond to 9600 bauds => 9600 Hz
     
-    * ![equation](images/equations.png)
+    *			 ![equation](images/equations.png)
     
     * 104 µs period equals to 9615.3846153846 Hz which is slightly more then 9600 Hz
     
